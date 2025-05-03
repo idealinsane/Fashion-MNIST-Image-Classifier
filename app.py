@@ -36,18 +36,23 @@ def home():
 
 @app.route("/predict", methods=['POST'])
 def predict():
-    ...
     file = request.files.get('file')
     if file and allowed_file(file.filename):
 
-        filepath = os.path.join('/tmp', file.filename)
+        filename = file.filename
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
+
         img = read_image(filepath)
+
         model = load_model('fashion_mnist_model.keras')
+
         prediction = model.predict(img)
         predicted_class = np.argmax(prediction[0])
         fashionitem = LABELS[predicted_class]
         return render_template('predict.html', fashion_item=fashionitem, user_image=filepath)
+    else:
+        return "Invalid file type. Please upload a valid image (png, jpg, jpeg)."
 
 if __name__ == "__main__":
     app.run()
