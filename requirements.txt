@@ -1,5 +1,6 @@
-flask==3.0.0
-tensorflow==2.15.0
-numpy==1.26.3
+flask==2.3.3
+numpy==1.24.3
+tensorflow==2.13.0
+keras==2.13.1
 gunicorn
 Pillow
