@@ -39,6 +39,8 @@ def predict():
     ...
     file = request.files.get('file')
     if file and allowed_file(file.filename):
+
+        filepath = os.path.join('/tmp', file.filename)
         file.save(filepath)
         img = read_image(filepath)
         model = load_model('fashion_mnist_model.keras')
