@@ -36,8 +36,12 @@ def home():
 
 @app.route("/predict", methods=['POST'])
 def predict():
-    file = request.files.get('file')
-    if file and allowed_file(file.filename):
+        file = request.files.get('file')
+        if not file:
+            return render_template('index.html', error_message="No file uploaded.")
+        
+        if not allowed_file(file.filename):
+            return render_template('index.html', error_message="Invalid file type. Please upload a valid image (png, jpg, jpeg).")
 
         if not os.path.exists(app.config['UPLOAD_FOLDER']):
             os.makedirs(app.config['UPLOAD_FOLDER'])
@@ -53,8 +57,6 @@ def predict():
         # predicted_class = np.argmax(prediction[0])
         fashionitem = LABELS[0]
         return render_template('predict.html', fashion_item=fashionitem, user_image=filepath)
-    else:
-        return "Invalid file type. Please upload a valid image (png, jpg, jpeg)."
 
 if __name__ == "__main__":
     app.run()
