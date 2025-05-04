@@ -51,7 +51,7 @@ def predict():
 
         prediction = model.predict(img)
         predicted_class = np.argmax(prediction[0])
-        fashionitem = LABELS[predicted_class]
+        fashionitem = LABELS[0]
         return render_template('predict.html', fashion_item=fashionitem, user_image=filepath)
     else:
         return "Invalid file type. Please upload a valid image (png, jpg, jpeg)."
